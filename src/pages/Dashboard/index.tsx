@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
 	}, []);
 
 	function formatCurrency(value: number) {
-		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value).replace(/-/, '- ');;
+		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value);
 	}
 
 	const formattedIncome = formatCurrency(balance.income);
@@ -106,16 +106,15 @@ const Dashboard: React.FC = () => {
 
 const TransactionRow: React.FC<{transaction:Transaction}> = ({transaction}) => {
 
-	function formatCurrency(value: number, type: string) {
-		if (type == 'outcome') value *= -1;
-		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value); //.replace(/-/, '- ');;
+	function formatCurrency(value: number) {
+		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value);
 	}
 
 	function formatDate(value: Date) {
 		return Intl.DateTimeFormat('pt-BR').format(new Date(value));
 	}
 
-	transaction.formattedValue = formatCurrency(transaction.value,transaction.type);
+	transaction.formattedValue = (transaction.type == 'outcome' ? '- ' : '')+formatCurrency(transaction.value);
 	transaction.formattedDate = formatDate(transaction.created_at);
 
 	return (
