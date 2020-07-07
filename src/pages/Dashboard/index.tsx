@@ -107,7 +107,8 @@ const Dashboard: React.FC = () => {
 const TransactionRow: React.FC<{transaction:Transaction}> = ({transaction}) => {
 
 	function formatCurrency(value: number, type: string) {
-		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value);
+		if (type == 'outcome') value *= -1;
+		return Intl.NumberFormat('pt-BR',{style:'currency', currency:'BRL'}).format(value); //.replace(/-/, '- ');;
 	}
 
 	function formatDate(value: Date) {
